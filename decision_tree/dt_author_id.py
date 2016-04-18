@@ -20,6 +20,11 @@ from email_preprocess import preprocess
 features_train, features_test, labels_train, labels_test = preprocess()
 
 
+import numpy as py
+print 'len(features_train): ', len(features_train[2])
+print 'len(labels_train): ', len(labels_train)
+print 'len(features_test): ', len(features_test)
+print 'len(labels_test): ', len(labels_test)
 
 
 #########################################################
@@ -27,5 +32,20 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 
 #########################################################
+from sklearn import tree
+clf = tree.DecisionTreeClassifier(min_samples_split=40)
+t0 = time()
+clf.fit(features_train, labels_train)
+print 'time training: ', time()-t0
+
+t1 = time()
+pred = clf.predict(features_test)
+print 'time predicting: ', time()-t1
+
+from sklearn.metrics import accuracy_score
+
+accuracy = accuracy_score(labels_test, pred)
+print 'accuracy: ', accuracy
+
 
 

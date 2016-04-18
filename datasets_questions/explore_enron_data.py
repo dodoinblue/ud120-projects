@@ -18,5 +18,5 @@
 import pickle
 
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
-
-
+print enron_data.__class__.__name__
+print len(enron_data)

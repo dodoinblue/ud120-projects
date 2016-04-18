@@ -24,7 +24,7 @@ plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
 plt.legend()
 plt.xlabel("bumpiness")
 plt.ylabel("grade")
-plt.show()
+#plt.show()
 ################################################################################
 
 
@@ -32,13 +32,39 @@ plt.show()
 ### visualization code (prettyPicture) to show you the decision boundary
 
 
+from sklearn.neighbors import KNeighborsClassifier
+from time import time
+from sklearn.metrics import accuracy_score
+
+def drawDecisionBoundary(clf):
+    print 'Classifier: ', clf.__class__.__name__
+    t0 = time()
+    clf.fit(features_train, labels_train)
+    print 'time training: ', time()-t0
+
+    t1 = time()
+    pred = clf.predict(features_test)
+    print 'time predicting: ', time()-t1
+
+    accuracy = accuracy_score(labels_test, pred)
+    print 'accuracy: ', accuracy
+
+    try:
+        plot = prettyPicture(clf, features_test, labels_test)
+        plot.show()
+    except NameError:
+        print 'something wront'
+        pass
+
+clf = KNeighborsClassifier(n_neighbors=9, weights='distance')
+drawDecisionBoundary(clf)
+
+from sklearn.ensemble import RandomForestClassifier
+rfClf = RandomForestClassifier()
+#drawDecisionBoundary(rfClf)
+
+from sklearn.ensemble import AdaBoostClassifier
+adaClf = AdaBoostClassifier()
+#drawDecisionBoundary(adaClf)
 
 
-
-
-
-
-try:
-    prettyPicture(clf, features_test, labels_test)
-except NameError:
-    pass

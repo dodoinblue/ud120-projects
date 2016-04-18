@@ -14,7 +14,20 @@ def outlierCleaner(predictions, ages, net_worths):
     cleaned_data = []
 
     ### your code goes here
+    error = []
+    import math
+    for i in range(len(ages)):
+        error.append(math.fabs(predictions[i] - net_worths[i]))
 
+    threshold = sorted(error)[-9]
+
+    zipped = zip(ages, net_worths, error)
+
+    for data in zipped:
+        if data[2] < threshold:
+            cleaned_data.append(data)
+    
+    print 'number of data left: ', len(cleaned_data)
     
     return cleaned_data
 

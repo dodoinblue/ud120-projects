@@ -38,6 +38,38 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
+from sklearn.tree import DecisionTreeClassifier
 
+clf = DecisionTreeClassifier()
+clf.fit(features_train, labels_train)
+pred = clf.predict(features_test)
+
+from sklearn.linear_model import Lasso
+
+#regression = Lasso(alpha=0.2)
+#regression.fit(features_train, labels_train)
+#coef = regression.coef_.tolist()
+#print 'coef_ is a ', coef.__class__.__name__
+#max_coef = max(regression.coef_)
+#print 'max coef_: ', max_coef
+#print 'index: ', coef.index(max_coef)
+
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(labels_test, pred)
+print 'accuracy: ', accuracy
+
+importance = clf.feature_importances_.tolist()
+max_importance = max(importance)
+pos_max_importance = importance.index(max_importance)
+print 'max importance: ', max_importance
+print 'index of max: ', pos_max_importance
+
+print 'feature word is: ', vectorizer.get_feature_names()[pos_max_importance]
+
+print 'type of importance: ', importance.__class__.__name__
+
+for index, value in enumerate(importance):
+    if value > 0.2:
+        print 'word: ', vectorizer.get_feature_names()[index], ' has importance of: ', value
 
 
